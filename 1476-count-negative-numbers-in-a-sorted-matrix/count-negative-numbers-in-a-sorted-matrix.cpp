@@ -6,12 +6,21 @@ public:
         int count = 0;
 
         for(int i=0; i<m; i++){
-            for(int j=0; j<n; j++){
-                if(grid[i][j] < 0){
-                    count += (n - j) * (m - i);
-                    n = j;
-                    break;
-                }
+            int neg = -1;
+            int low = 0;
+            int high = n - 1;
+
+            while(low <= high){
+                int mid = low + (high - low) / 2;
+                if(grid[i][mid] < 0){
+                    neg = mid;
+                    high = mid - 1;
+                } else low = mid + 1;
+            }
+
+            if(neg != -1){
+                count += (m - i) * (n - neg);
+                n = neg;
             }
         }
 
